@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNSAID | Anonymous Sanctuary</title>
+    <style>
+        :root {
+            --neon-green: #00ff66;
+            --dark-bg: #000000;
+            --card-bg: #0a0a0a;
+            --border-color: #00ff66;
+            --text-gray: #888;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px var(--neon-green);
+            border-radius: 8px;
+        }
+        #adminBanner {
+            background: #111;
+            border: 1px dashed red;
+            color: #ff3333;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        h1, h2, h3 { text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: var(--text-gray); font-size: 14px; margin-bottom: 25px; }
+        .section-box {
+            background: #050505;
+            border: 1px solid #222;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        .privacy-shield {
+            background: #0a140d;
+            border: 1px dashed var(--neon-green);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #d1ffd6;
+        }
+        textarea, input, select {
+            width: 95%;
+            background: #111;
+            color: var(--neon-green);
+            border: 1px solid #333;
+            padding: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        textarea:focus, input:focus, select:focus {
+            border-color: var(--neon-green);
+            outline: none;
+        }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #aaa; }
+        button {
+            background: var(--neon-green);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--neon-green);
+            border-radius: 4px;
+            width: 100%;
+        }
+        button:hover { background: #00cc52; }
+        button.secondary {
+            background: #111;
+            color: var(--neon-green);
+            border: 1px solid var(--border-color);
+            box-shadow: none;
+            margin-top: 10px;
+        }
+        .tabs { display: flex; margin-top: 30px; border-bottom: 1px solid #333; }
+        .tab-btn {
+            background: none; box-shadow: none; color: #888; border-radius: 0;
+            border-bottom: 2px solid transparent; padding: 10px; flex: 1;
+        }
+        .tab-btn.active { color: var(--neon-green); border-bottom: 2px solid var(--neon-green); }
+        .hidden { display: none; }
+        .warning-box { border: 1px solid red; padding: 15px; background: #1a0000; color: #ff6666; margin-top: 15px; }
+        .post-card {
+            background: #0d0d0d; border: 1px solid #222; padding: 15px; margin-top: 15px; border-radius: 4px;
+        }
+        .post-meta { font-size: 12px; color: #666; margin-bottom: 10px; }
+        .post-actions { display: flex; gap: 15px; margin-top: 10px; font-size: 14px; }
+        .action-link { cursor: pointer; color: #aaa; }
+        .action-link:hover { color: var(--neon-green); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="adminBanner">
+            <img id="bannerImg" src="" style="max-width:100%; display:none; margin-bottom:10px;"><br>
+            <span id="bannerText">System Alert Notice</span>
+        </div>
+        <h1>UNSAID</h1>
+        <div class="subtitle">[SPEAK THE UNSPOKEN TRUTH | 100% SECURE]</div>
+        <!-- SUBMISSION FORM VIEW -->
+        <div id="submitView" class="section-box">
+            <h3>🔒 Publish an Anonymous Secret</h3>
+            <div class="privacy-shield">
+                🔒 <b>100% ANONYMOUS & SECURE:</b> यह प्लेटफॉर्म पूरी तरह से सुरक्षित और बेनाम है। बिना किसी डर या हिचकिचाहट के अपने दिल का बोझ, पछतावा या परेशानियां यहाँ खुलकर लिखें। आपका असली नाम या ईमेल किसी को कभी नहीं दिखेगा। खुलकर बोलें, यह आपकी अपनी सुरक्षित जगह है।
+            </div>
+            <form id="echoForm" onsubmit="handleFormSubmit(event)">
+                <label>Your Secret / Regret *</label>
+                <textarea id="secretInput" placeholder="Write your deepest secret here..." required></textarea>
+                
+                <label>Display Name (Optional - e.g., CyberGhost)</label>
+                <input type="text" id="nameInput" placeholder="Leave blank for Anonymous">
+                
+                <label>Recovery Email (Optional - Used for Account Recovery support)</label>
+                <input type="email" id="emailInput" placeholder="name@example.com">
+                
+                <button type="submit">GENERATE SECURE TOKEN & PUBLISH</button>
+            </form>
+        </div>
+
+        <!-- SUCCESS SCREEN VIEW -->
+        <div id="successView" class="section-box hidden">
+            <h3 style="color: var(--neon-green);">✓ Successfully Stored</h3>
+            <p>आपकी पोस्ट पब्लिशिंग के लिए सुरक्षित भेज दी गई है।</p>
+            <p><strong>Registered Name:</strong> <span id="resName"></span></p>
+            <p><strong>Secure Login Token:</strong> <span id="resToken" style="color: #fff; font-size: 18px; letter-spacing: 1px;"></span></p>
+            <div class="warning-box">
+                <strong>⚠️ महत्वपूर्ण चेतावनी:</strong> भविष्य में अपना नाम बदलने या सहायता प्राप्त करने के लिए इस <b>Name</b> और <b>Secure Token</b> दोनों को संभाल कर कहीं लिख लें।
+            </div>
+            <br>
+            <button onclick="resetFormView()">Go Back Home</button>
+        </div>
+
+        <!-- DUAL-AUTH DASHBOARD LOGIN VIEW -->
+        <div class="section-box">
+            <h3>👤 My Private Dashboard</h3>
+            <div id="loginFormBox">
+                <input type="text" id="loginName" placeholder="Enter your Display Name" required>
+                <input type="text" id="loginToken" placeholder="Enter Secure Token (UNSAID-XXXX...)" required>
+                <button onclick="handleDashboardLogin()">LOGIN TO DASHBOARD</button>
+            </div>
+            <div id="dashboardContent" class="hidden">
+                <p style="color: #fff;">Welcome back! You can only modify your Display Name here.</p>
+                <label>Edit Display Name</label>
+                <input type="text" id="editNameInput">
+                <button onclick="updateDisplayName()">UPDATE NAME</button>
+                <button class="secondary" onclick="logoutDashboard()">Logout</button>
+            </div>
+        </div>
+
+        <!-- PUBLIC WALL SECTIONS -->
+        <div class="tabs">
+            <button class="tab-btn active" id="recentTab" onclick="switchTab('recent')">Recent Secrets</button>
+            <button class="tab-btn" id="trendingTab" onclick="switchTab('trending')">🔥 Trending / Hot</button>
+        </div>
+        <div id="wallContainer">
+            <div class="post-card">
+                <div class="post-meta">Anonymous #1001 • Just Now • By: Anonymous</div>
+                <p>Welcome to UNSAID. Share your unspoken thoughts securely.</p>
+                <div class="post-actions">
+                    <span class="action-link" onclick="handleVote('1001', 'upvote')">❤️ Upvote (0)</span>
+                    <span class="action-link" onclick="handleVote('1001', 'downvote')">💔 Downvote (0)</span>
+                </div>
+            </div>
+        </div>
+        <!-- HELP & SUPPORT DESK VIEW -->
+        <div class="section-box" style="margin-top: 40px; border-color: #333;">
+            <h3>🛠️ Help & Support Desk</h3>
+            <form id="supportForm" onsubmit="handleSupportSubmit(event)">
+                <label>Select Query Type *</label>
+                <select id="queryType" required>
+                    <option value="Account Recovery">Account Recovery (Forgot Token/Name)</option>
+                    <option value="Post Delete Request">Post Delete Request</option>
+                    <option value="Report Bug">Report Page Bug / Issue</option>
+                    <option value="Feedback">Feedback & Suggestions</option>
+                </select>
+                <label>Describe your issue details *</label>
+                <textarea id="supportMsg" placeholder="Type your request here..." required></textarea>
+                <label>Your Secure Contact Info * (Secret Email or Telegram handle for Admin to reach you)</label>
+                <input type="text" id="supportContact" placeholder="e.g., mail@proton.me or @tg_username" required>
+                <button type="submit" class="secondary">SUBMIT SUPPORT TICKET</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // अपनी गूगल ऐप्स स्क्रिप्ट का यूआरएल यहाँ डालें
+        const googleScriptURL = "YOUR_GOOGLE_WEB_APP_URL_HERE";
+
+        function generateSecureToken() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let t = '';
+            for (let i = 0; i < 16; i++) {
+                if (i > 0 && i % 4 === 0) t += '-';
+                t += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return 'UNSAID-' + t;
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const secret = document.getElementById('secretInput').value;
+            let name = document.getElementById('nameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            if(!name) name = "Anonymous";
+            const token = generateSecureToken();
+
+            const payload = { action: "newPost", secret: secret, name: name, email: email, token: token };
+            
+            // डेटा को गुप्त रूप से गूगल शीट में भेजना
+            fetch(googleScriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                document.getElementById('submitView').classList.add('hidden');
+                document.getElementById('successView').classList.remove('hidden');
+                document.getElementById('resName').innerText = name;
+                document.getElementById('resToken').innerText = token;
+            });
+        }
+
+        function resetFormView() {
+            document.getElementById('echoForm').reset();
+            document.getElementById('successView').classList.add('hidden');
+            document.getElementById('submitView').classList.remove('hidden');
+        }
+
+        function handleDashboardLogin() {
+            const name = document.getElementById('loginName').value;
+            const token = document.getElementById('loginToken').value;
+            // लॉगिन वेरिफिकेशन लॉजिक
+            document.getElementById('loginFormBox').classList.add('hidden');
+            document.getElementById('dashboardContent').classList.remove('hidden');
+            document.getElementById('editNameInput').value = name;
+        }
+
+        function logoutDashboard() {
+            document.getElementById('dashboardContent').classList.add('hidden');
+            document.getElementById('loginFormBox').classList.remove('hidden');
+        }
+
+        function handleSupportSubmit(e) {
+            e.preventDefault();
+            const type = document.getElementById('queryType').value;
+            const msg = document.getElementById('supportMsg').value;
+            const contact = document.getElementById('supportContact').value;
+
+            const payload = { action: "support", queryType: type, message: msg, contact: contact };
+            
+            fetch(googleScriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert("सपोर्ट टिकट सुरक्षित भेज दिया गया है।");
+                document.getElementById('supportForm').reset();
+            });
+        }
+
+        function switchTab(tab) {
+            document.getElementById('recentTab').classList.toggle('active', tab === 'recent');
+            document.getElementById('trendingTab').classList.toggle('active', tab === 'trending');
+        }
+        
+        function handleVote(id, type) {
+            alert(type + " registered for post " + id);
+        }
+    </script>
+</body>
+</html>
+function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var JSONData = JSON.parse(e.postData.contents);
+    var action = JSONData.action;
+    
+    if (action === "newPost") {
+      var sheet = ss.getSheetByName("Sheet1") || ss.getSheets()[0];
+      var timestamp = new Date();
+      var token = JSONData.token;
+      var name = JSONData.name;
+      var email = JSONData.email || "Not Provided";
+      var secret = JSONData.secret;
+      
+      // डेटाशीट में आईपी और स्टेटस 'Hold' के साथ डेटा डालना
+      sheet.appendRow([timestamp, token, name, email, secret, "Captured", "Browser", 0, 0, "Hold"]);
+      
+      return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    if (action === "support") {
+      var supportSheet = ss.getSheetByName("Support");
+      if (!supportSheet) {
+        supportSheet = ss.insertSheet("Support");
+        supportSheet.appendRow(["Timestamp", "Query Type", "Message", "Contact Info", "Status"]);
+      }
+      supportSheet.appendRow([new Date(), JSONData.queryType, JSONData.message, JSONData.contact, "Pending"]);
+      
+      return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+  } catch(error) {
+    return ContentService.createTextOutput(JSON.stringify({"status": "error", "error": error.toString()}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  // फ्रंटएंड पर अप्रूव्ड डेटा भेजने का लॉजिक यहाँ आएगा
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[0];
+  var data = sheet.getDataRange().getValues();
+  var approvedPosts = [];
+  
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][9] === "Live") { // केवल Approved/Live पोस्ट्स दिखाएं
+      approvedPosts.push({
+        id: i,
+        name: data[i][2],
+        secret: data[i][4],
+        upvotes: data[i][7],
+        downvotes: data[i][8]
+      });
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify(approvedPosts))
+                       .setMimeType(ContentService.MimeType.JSON);
+}
